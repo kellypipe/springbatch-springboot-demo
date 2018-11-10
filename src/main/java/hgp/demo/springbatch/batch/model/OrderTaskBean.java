@@ -6,6 +6,7 @@ import hgp.demo.springbatch.batch.task.CustomItemProcessor;
 import org.springframework.util.StringUtils;
 
 /**
+ * 封装了step
  * @author admin
  * @date 2018/9/6
  **/

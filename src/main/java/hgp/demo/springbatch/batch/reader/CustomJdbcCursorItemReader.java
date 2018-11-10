@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 读取数据
+ * 定义读取数据 bean
  * @creator:gp.huang
  * @since:2018-09-25 10:59
  */

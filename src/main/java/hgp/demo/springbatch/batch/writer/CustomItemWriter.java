@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO
- *
+ * 定义写入数据的bean
  * @creator:gp.huang
  * @since:2018-10-28 15:16
  */

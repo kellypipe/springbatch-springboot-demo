@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 /**
- * 自定义 BatchConfigurer
+ * 自定义 BatchConfigurer 主要用来自定义数据源
  * {@link org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer}
  * @creator:gp.huang
  * @since:2018-09-17 14:15

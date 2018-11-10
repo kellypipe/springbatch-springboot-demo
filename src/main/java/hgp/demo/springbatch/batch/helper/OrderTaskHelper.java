@@ -5,7 +5,9 @@ import hgp.demo.springbatch.batch.model.OrderTaskBean;
 
 import java.util.*;
 
-
+/**
+ * 在springboot 启动时 分别保存每个任务下的所有step.
+ */
 public class OrderTaskHelper {
 
     private static Map<String, Set<OrderTaskBean>> orderTasks = new HashMap<>();

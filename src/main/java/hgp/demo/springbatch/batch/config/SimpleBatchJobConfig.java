@@ -2,8 +2,10 @@ package hgp.demo.springbatch.batch.config;
 
 
 import hgp.demo.springbatch.batch.helper.OrderTaskHelper;
+import hgp.demo.springbatch.batch.listen.CustomerJobExecutionListener;
 import hgp.demo.springbatch.batch.listen.CustomerStepExecutionListener;
 import hgp.demo.springbatch.batch.model.OrderTaskBean;
+import hgp.demo.springbatch.task.TaskService;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -36,12 +38,21 @@ public class SimpleBatchJobConfig implements SchedulingConfigurer {
     public StepBuilderFactory stepBuilderFactory;
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
+    @Autowired
+    public CustomerJobExecutionListener customerJobExecutionListener;
+    @Autowired
+    public CustomerStepExecutionListener customerStepExecutionListener;
 
     @Bean(destroyMethod = "shutdown")
     public ScheduledExecutorService taskExecutor() {
         return new ScheduledThreadPoolExecutor(20);
     }
 
+    /**
+     * 从{@link OrderTaskHelper} 类中 以job 名称为key 取出所有的step 。
+     * @param jobName
+     * @return
+     */
     public List<Step> jobSteps(String jobName) {
         Optional<Set<OrderTaskBean>> sample = OrderTaskHelper.get(jobName);
         List<Step> list = new ArrayList<>();
@@ -51,10 +62,15 @@ public class SimpleBatchJobConfig implements SchedulingConfigurer {
                         .tasklet(orderTaskBean.getTask()).build());
             }else {
                 list.add(stepBuilderFactory.get(orderTaskBean.getStepName())
-                        .listener(new CustomerStepExecutionListener())
+                        //step 监听
+                        .listener(customerStepExecutionListener)
+                        //每10000条记录写入
                         .chunk(10000)
+                        //读取数据
                         .reader(orderTaskBean.getProcessor().getItemReader())
+                        //处理数据
                         .processor(orderTaskBean.getProcessor())
+                        //写入数据
                         .writer(orderTaskBean.getProcessor().getItemWriter())
                         .build());
             }
@@ -62,14 +78,13 @@ public class SimpleBatchJobConfig implements SchedulingConfigurer {
         return list;
     }
 
-    @Bean(name = "sampleJob")
-    @Lazy
-    public Job getSampleJob(Optional<String> jobName) throws Exception {
-        return getJob(jobName.orElseGet(()-> "sampleJob"));
-    }
-
+    /**
+     * 用step 组装job
+     * @param jobName
+     * @return
+     * @throws Exception
+     */
     private Job getJob(String jobName) throws Exception {
-
         List<Step> steps = jobSteps(jobName);
         if (steps.isEmpty()) {
             throw new Exception("No found any steps");
@@ -82,9 +97,24 @@ public class SimpleBatchJobConfig implements SchedulingConfigurer {
                 jobBuilder.next(steps.get(i));
             }
         }
-
-        return jobBuilder.build();
+        return jobBuilder
+                .listener(customerJobExecutionListener)
+                .build();
     }
+
+
+    /**
+     * 定义一个任务 。如何执行这个任务参考{@link TaskService}
+     * @param jobName
+     * @return
+     * @throws Exception
+     */
+    @Bean(name = "sampleJob")
+    @Lazy
+    public Job getSampleJob(Optional<String> jobName) throws Exception {
+        return getJob(jobName.orElseGet(()-> "sampleJob"));
+    }
+
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {

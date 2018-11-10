@@ -13,6 +13,11 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * 利用{@link OrderProcessor} 来获取每一个子任务的steo.(这里的step CustomItemProcessor 的子类)
+ * @param <O>
+ * @param <T>
+ */
 public abstract class CustomItemProcessor<O, T> implements ItemProcessor<O, T>, ApplicationContextAware {
     private ItemReader itemReader;
 
