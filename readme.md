@@ -1,6 +1,5 @@
 
 ##  <center>springbatch 结合springboot 的一个demo </center> 
-由于项目的需要引入了springbatch 来处理数据同步的问题。但由于一个任务的子任务多。。如果将每个job 都写死了都不利于后期的维护和修改。所以在前辈的基础上结合了springboot 实现了一个简单的可配置任务。
  在这里就不对springbatch 做详细的描述关于springbatch可以参考：https://blog.csdn.net/kellypipe/article/details/83018416。
  ![在这里插入图片描述](https://github.com/kellypipe/plugin/blob/master/picture/spring/springbatch/springbatch.jpg?raw=true)
  如图，在springbatch每一个任务都有不同的step组成。每一个step 可以拆解为  读数据 ，处理数据，写入数据 3 个步骤。如果你的任务不涉及读，处理，写 这种特点，只是简单的任务处理 springbatch 也提供了 tasklet 来处理任务。所以在demo中 整合这两者 ，实现在不修改原有任务， 进行任务step 的添加 ，删除，修改等。
