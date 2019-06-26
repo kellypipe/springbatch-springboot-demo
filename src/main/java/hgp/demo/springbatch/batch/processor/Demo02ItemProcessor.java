@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 任务4 的处理类
+ * @author:gp.huang
+ * @since:2018-10-30 17:50
  */
 @Component
 @OrderProcessor(jobName = "sampleJob",stepName = "demo04",order = 4)

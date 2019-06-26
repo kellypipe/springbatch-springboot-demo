@@ -20,14 +20,14 @@ import java.util.Date;
 
 @Component("demoTask")
 public class TaskService {
-    private transient Logger logger = LoggerFactory.getLogger(TaskService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
     @Autowired
     private JobLauncher jobLauncher;
     @Resource(name = "sampleJob")
     @Lazy
     private Job sampleJob;
-    public void process(Object... params) {
+    public void process() {
         try {
             jobLauncher.run(sampleJob, new JobParametersBuilder().addString("param1", String.valueOf("demo")).addDate("date", new Date()).toJobParameters());
         } catch (JobExecutionAlreadyRunningException e) {

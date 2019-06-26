@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContextAware;
 import java.lang.annotation.Annotation;
 
 /**
- * 利用{@link OrderTask} 来获取每一个子任务的steo.(这里的step 指的是实现AbstractTask 的子类)
+ * 利用{@link OrderTask} 来获取每一个子任务的step.(这里的step 指的是实现AbstractTask 的子类)
  * @author admin
  * @date 2018/9/6
  **/

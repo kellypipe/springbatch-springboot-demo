@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 
 /**
- *  如果不涉及读数据，写数据 只是一个简单的任务 只需要实现AbstractTask 即可。
+ * springbatch 另外提供了 Tasklet 接口：不用很明显的按 读取数据，处理数据，写入数据这3个步骤执行；可以将所有的逻辑都包含在 Tasklet 中；
+ * @author:gp.huang
+ * @since:2018-10-30 17:50
  */
 @Component
 @OrderTask(jobName = "sampleJob",stepName = "tasklet01",order = 1)

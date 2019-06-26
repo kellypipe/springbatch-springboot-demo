@@ -7,7 +7,11 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Task02
+ * @author:gp.huang
+ * @since:2018-10-30 17:50
+ */
 @Component
 @OrderTask(jobName = "sampleJob",stepName = "tasklet02",order = 2)
 public class Task02 extends AbstractTask {

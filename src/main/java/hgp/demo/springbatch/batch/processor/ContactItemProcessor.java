@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
- * 每一个任务都需要一个extends CustomItemProcessor .
+ * 每一个job 处理类
+ * @author:gp.huang
+ * @since:2018-10-30 17:50
  */
 @Component
 @OrderProcessor(jobName = "sampleJob",stepName = "sync_user_info",order = 3)

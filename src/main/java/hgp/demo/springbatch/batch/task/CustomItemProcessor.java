@@ -19,6 +19,7 @@ import java.lang.annotation.Annotation;
  * @param <T>
  */
 public abstract class CustomItemProcessor<O, T> implements ItemProcessor<O, T>, ApplicationContextAware {
+
     private ItemReader itemReader;
 
     private ItemWriter itemWriter;
